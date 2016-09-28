@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="LearningHub">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>OnePush</title>
+        
+           <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/fontawesome/css/font-awesome.css">
+          <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+           <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <![endif]-->
+     </head>
+    <body  ng-controller="MainController" >
+         <div id="site-name" class="jumbotron container-fluid">
+             <h1>Springboard</h1><h3>Learning Hub - One stop hub for all learning paths.</h3>
+             <div class="social">
+               <a>  <i class="fa fa-facebook fa-2x"></i></a>
+                <a> <i class="fa fa-twitter fa-2x"></i></a>
+                <a> <i class="fa fa-linkedin fa-2x"></i></a>
+                <a> <i class="fa fa-github fa-2x"></i></a>
+             </div>
+         </div>
+        <section id="main-wrapper">
+    <section class="main" >   
+       <aside class="filter-section">
+        <div class="aside-item">
+        <h3>Total Courses:&nbsp;<strong>{{courses.paths.length}}</strong></h3>
+        </div>
+          <fieldset class="aside-item">
+              <h3 id="filter-toggle">Filters</h3>
+             <div id="filter-form">
+             <div class="form-group">
+              <label for="search">Search</label>
+                 <input type=text list="lang" name="search" ng-model="searchText" placeholder="Search">
+                </div>
+              <div class="form-group">
+                   <label for="sort">Sort</label>     
+                <select ng-model="sortBy" name="sort">
+
+                    <option value="up_votes" ng-selected="true">Up Votes</option>
+                    <option value="down_votes">Down Votes</option>
+                    <option value="learners_count">Learners</option>
+                    <option value="duration">Duration</option>
+                    </select>
+              </div>
+                  </div>
+           </fieldset>
+       </aside>
+            
+    <div class="item-container">
+           
+            <div ng-repeat="Item in paths=(courses.paths | filter:searchText | orderBy:sortBy)" class="item">
+
+            <div class="item-image"><img src="{{Item.image}}" alt="{{Item.name}}"></div>
+                <div class="item-detail">
+                <a href="{{Item.sign_up}}" target="_blank"><h4>{{Item.name}}</h4></a>
+         <h6><strong>{{Item.tags}}</strong></h6>
+                    <h5>Description:{{Item.description.substr(0,40)}}</h5>
+                </div>
+                <div class="item-bookmark"><button ng-click="viewDetails(Item)">View Details</button></div>
+             </div>
+            </div>
+        <div id="detail-overlay" style="display: none">
+        <div id="detail">
+            <p class="course-title"><a href="{{selectedItem.sign_up}}" target="_blank">{{selectedItem.name}}</a></p>
+             <div class="item">
+                 
+            <div class="item-image"><img src="{{selectedItem.image}}" alt="{{selectedItem.name}}"></div>
+                <div class="item-detail">
+                
+                    <h5>{{selectedItem.description}}</h5>
+                    <h6>Tags:&nbsp;{{selectedItem.tags}}</h6>
+         
+                   <p> Duration:&nbsp;<strong>{{selectedItem.hours}}</strong>&nbsp;hrs &nbsp;|&nbsp;Learners:&nbsp;<strong>{{selectedItem.learner}}</strong>&nbsp;|&nbsp;
+                    Total Votes:&nbsp;<strong>{{selectedItem.total_votes}}</strong></p>
+
+                   
+                       <button class="btn btn-info" ng-click="upVote(selectedItem)"> Up Vote:&nbsp;{{selectedItem.up_votes}}</button>
+                    <button class="btn btn-info" ng-click="downVote(selectedItem)">Down Vote:&nbsp;{{selectedItem.down_votes}}</button>
+                       <a href="{{selectedItem.sign_up}}" target="_blank"><button class="btn btn-primary pull-right" >View Curriculum</button></a>
+           
+       </div>
+                       
+            </div>
+        <button class="class" ng-click="hideDetails()" class="close">Hide</button>
+        </div>
+           
+        </div>
+   </section>
+          </section>
+                <div id="detail-overlay" style="display: none">
+        <div id="detail">
+            <p class="course-title"><a href="{{selectedItem.sign_up}}" target="_blank">{{selectedItem.name}}</a></p>
+             <div class="item">
+                 
+            <div class="item-image"><img src="{{selectedItem.image}}" alt="{{selectedItem.name}}"></div>
+                <div class="item-detail">
+                
+                    <h5><strong>{{selectedItem.description}}</strong></h5>
+                    <h6>Tags:&nbsp;{{selectedItem.tags}}</h6>
+         
+                   <p> Duration:{{selectedItem.hours}}&nbsp;hrs &nbsp;|&nbsp;Learners:{{selectedItem.learner}}&nbsp;|&nbsp;
+                    Total Votes:{{selectedItem.total_votes}}</p>
+
+                   
+                       <button class="btn btn-info" ng-click="upVote(selectedItem)"> Up Vote:&nbsp;{{selectedItem.up_votes}}</button>
+                    <button class="btn btn-info" ng-click="downVote(selectedItem)">Down Vote:&nbsp;{{selectedItem.down_votes}}</button>
+                       <a href="{{selectedItem.sign_up}}" target="_blank"><button class="btn btn-primary pull-right" >View Curriculum</button></a>
+           
+       </div>
+                       
+            </div>
+        <button class="class" ng-click="hideDetails()" class="close">Hide</button>
+        </div>
+           
+        </div>
+
+        <footer class="main-footer"><center>Copyright 2016 , <a href="http://subhendubharti.in" target="_blank">Subhendu Bharti</a></center></footer>
+        <script src="assets/js/angular.min.js"></script>
+        <script src="assets/js/controller.js"></script>
+            </body>
+</html>
