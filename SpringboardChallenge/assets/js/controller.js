@@ -1,16 +1,17 @@
+var app = angular.module("LearningHub",["LearningHubData"]);
 
-
-var app = angular.module("LearningHub",[]);
-
-app.controller('MainController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+app.controller('MainController', ['$rootScope', '$scope', '$http','DataService', function ($rootScope, $scope, $http,DataService) {
     $scope.index = [];
     $scope.CoursesVotes = JSON.parse(localStorage.getItem('CoursesVotes')) || [];
-    $http.get('https://hackerearth.0x10.info/api/learning-paths?type=json&query=list_paths')
+    /*$http.get('https://hackerearth.0x10.info/api/learning-paths?type=json&query=list_paths')
     .then(function (response) {
         $scope.courses = response.data;
         $scope.initialAdjust();
     }, function (error) {
-    });
+    });*/
+    DataService.getData(function(data){$scope.courses=data;    $scope.initialAdjust();
+});
+    
     $scope.upVote = function (item) {
         item.up_votes += 1;
         item.total_votes += 1;
